@@ -47,12 +47,12 @@ public class Escena extends JPanel {
         public Item3 item3;
         public Item4 item4;
         private Image scoreImage;
-    private Image timeImage;
+        private Image timeImage;
 
 
 	private Font afficheScore = new Font("Roboto", Font.PLAIN, 16);
 	private Font afficheTexte = new Font("Roboto", Font.ITALIC|Font.BOLD, 100);
-            private Font timerFont = new Font("Roboto", Font.PLAIN, 16);
+        private Font timerFont = new Font("Roboto", Font.PLAIN, 16);
 
 	public int score = 0;
             public Timer timer;

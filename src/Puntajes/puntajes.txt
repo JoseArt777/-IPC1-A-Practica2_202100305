@@ -7,3 +7,5 @@ jugador6: 110
 jose: 150
 ejemplo: 250
 juan: 640
+ejemplofinal: 250
+primer_lugar: 760

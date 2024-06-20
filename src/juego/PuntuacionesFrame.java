@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package juego;
 
 import javax.swing.*;
@@ -27,11 +23,44 @@ public class PuntuacionesFrame extends JFrame {
 
         listModel = new DefaultListModel<>();
         puntuacionesList = new JList<>(listModel);
-        puntuacionesList.setFont(new Font("Arial", Font.PLAIN, 16)); // Establecer una fuente y tamaño más grande
+        puntuacionesList.setFont(new Font("Arial", Font.BOLD, 25)); // Establecer una fuente y tamaño más grande
+        puntuacionesList.setForeground(Color.YELLOW); // Establecer el color de la fuente a amarillo
+
+        // Establecer un ListCellRenderer personalizado para centrar el texto
+        puntuacionesList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el texto horizontalmente
+                return label;
+            }
+        });
 
         cargarPuntuaciones();
 
-        getContentPane().add(new JScrollPane(puntuacionesList), BorderLayout.CENTER);
+        // Crear un JScrollPane con la lista de puntuaciones
+        JScrollPane scrollPane = new JScrollPane(puntuacionesList);
+
+        // Crear un JLayeredPane para manejar la imagen de fondo y el contenido
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setLayout(new OverlayLayout(layeredPane));
+
+        // Crear un JLabel para la imagen de fondo
+        JLabel backgroundLabel = new JLabel();
+        ImageIcon imagenFondo = new ImageIcon("src/images/podio.jpg"); // Cambia la ruta a tu imagen
+        backgroundLabel.setIcon(imagenFondo);
+        backgroundLabel.setBounds(0, 0, getWidth(), getHeight());
+
+        // Agregar el fondo y el contenido al layeredPane
+        layeredPane.add(backgroundLabel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(scrollPane, JLayeredPane.PALETTE_LAYER);
+
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        puntuacionesList.setOpaque(false);
+        puntuacionesList.setBackground(new Color(0, 0, 0, 0));
+
+        getContentPane().add(layeredPane);
     }
 
     private void cargarPuntuaciones() {
@@ -53,6 +82,7 @@ public class PuntuacionesFrame extends JFrame {
             Collections.sort(puntuaciones, Comparator.comparingInt(Puntuacion::getPuntuacion).reversed());
             // Construir el modelo de lista con las puntuaciones
             listModel.clear();
+            listModel.addElement("Positions:"); // Añadir el título al inicio
             for (int i = 0; i < Math.min(puntuaciones.size(), 5); i++) {
                 Puntuacion p = puntuaciones.get(i);
                 String item = (i + 1) + ". " + p.getNombre() + " - " + p.getPuntuacion();
@@ -89,5 +119,4 @@ public class PuntuacionesFrame extends JFrame {
             frame.setVisible(true);
         });
     }
-
 }
