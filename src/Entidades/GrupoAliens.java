@@ -14,13 +14,9 @@ public class GrupoAliens {
     private Alien tabAlien[][] = new Alien[8][5];
     private boolean vaAbajo, pos1; // numeros 
     private int velocidad;
-
     private int[] tabAlienMuerto = {-1,-1}; // alien muerto
-
     Random azar = new Random();
-
     private int nombreAliens = Constantes.NUMERO_ALIENS;
-
     private int contadorSonAlien = 0;
 
     // Constructor
@@ -109,7 +105,7 @@ public class GrupoAliens {
         return reponse;
     }
 
-    public void alienTourneEtDescend() {
+    public void alienbucledesplaza() {
         if (this.toucheBas()) {
             // Si toca el borde inferior, mueve hacia la izquierda
             for (int ligne = 0; ligne < 8; ligne++) {
@@ -172,7 +168,7 @@ public class GrupoAliens {
         } else {
             this.pos1 = true;
         }
-        this.alienTourneEtDescend();
+        this.alienbucledesplaza();
     }
 
     public void tirVaisseauToucheAlien(ProyectilNave tirVaisseau) {

@@ -51,7 +51,6 @@ public class PuntuacionesFrame extends JFrame {
 
             // Ordenar las puntuaciones de mayor a menor
             Collections.sort(puntuaciones, Comparator.comparingInt(Puntuacion::getPuntuacion).reversed());
-
             // Construir el modelo de lista con las puntuaciones
             listModel.clear();
             for (int i = 0; i < Math.min(puntuaciones.size(), 5); i++) {
@@ -59,7 +58,6 @@ public class PuntuacionesFrame extends JFrame {
                 String item = (i + 1) + ". " + p.getNombre() + " - " + p.getPuntuacion();
                 listModel.addElement(item);
             }
-
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar las puntuaciones.", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();

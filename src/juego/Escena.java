@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -99,8 +98,6 @@ public class Escena extends JPanel {
         });
         timer.start(); // Comenzar el temporizador
                  
-                 
-                 
                  this.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -113,13 +110,10 @@ public class Escena extends JPanel {
 
         }
     }
-        });
-		
-		
+        });		
 		// instancias del tiempo
 		Thread chronoEcran = new Thread(new Tiempo());
 		chronoEcran.start();
-                
 	}
         
 // Método para guardar el puntaje en un archivo
@@ -146,54 +140,39 @@ public class Escena extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics g2 = (Graphics2D) g;
-		
 		// fondo de pantalla
-                
-                        g2.drawImage(fondo, 0, 0, Constantes.LARGO_VENTANA, Constantes.ALTURA_VENTANA, this);
-
-		
-		// Score
+                g2.drawImage(fondo, 0, 0, Constantes.LARGO_VENTANA, Constantes.ALTURA_VENTANA, this);
 		// Establecer el color de fondo para el rectángulo
                 g.setColor(Color.BLUE); // O el color que prefieras
-
                 // Dibujar un único rectángulo grande detrás de ambos textos
                 g.fillRect(0, 0, 1000, 40); // Ajusta las coordenadas y el tamaño según sea necesario
-                        g.drawImage(scoreImage, 20, 10, null); // Ajusta las coordenadas según sea necesario
-
+                g.drawImage(scoreImage, 20, 10, null); // Ajusta las coordenadas según sea necesario
                 // Dibujar el primer texto
                 g.setFont(afficheScore);
                 g.setColor(Color.WHITE); // O el color que prefieras para el texto
                 g.drawString("Score : " + score, 380, 25);
-
-                  g.drawImage(timeImage, 350, 10, null); // Ajusta las coordenadas según sea necesario
-
-                    // Dibujar el segundo texto
+                g.drawImage(timeImage, 350, 10, null); // Ajusta las coordenadas según sea necesario
+                // Dibujar el segundo texto
                 g.setFont(timerFont);
                 g.setColor(Color.WHITE); // O el color que prefieras para el texto
                 g.drawString("Tiempo: " + tiempoRestante + " s", 50, 25);
-		
 		//diseño de nave
 		this.vaisseau.dessinVaisseau(g2);
-		
 		// diseño aliens
 		this.groupeAliens.dessinAliens(g2);
-		
 		// diseño proyectil nave
 		this.tirVaisseau.dessinTirVaisseau(g2);
 		this.groupeAliens.tirVaisseauToucheAlien(this.tirVaisseau);
-		
 		// Inicio de juego
 		if(tiempoRestante ==90) {
-			g.setFont(afficheTexte);
+		    g.setFont(afficheTexte);
                     g.setColor(Color.YELLOW); // O el color que prefieras para el texto
 		    g.drawString("LET´S GO!!!", 200, 300);
 		}
-		
 		 if (!this.vaisseau.isVivo() || tiempoRestante <= 0) {
             g.setFont(afficheTexte);
             g.setColor(Color.YELLOW);
             g.drawString("GAME OVER", 200, 300);
-
             // Mostrar diálogo solo una vez
             if (!gameOverDisplayed) {
                 gameOverDisplayed = true;
@@ -207,11 +186,7 @@ public class Escena extends JPanel {
                          clip.stop();
                          Main.jeu = true;
                          Main.main(new String[]{});
-                     
-            
         }
-		
-		
 		// diseño prooyectil aliens
 		if(Tiempo.compteTours % 500 == 0) {
 			tirAlien1 = new ProyectilAlien(this.groupeAliens.choixAlienQuiTire());

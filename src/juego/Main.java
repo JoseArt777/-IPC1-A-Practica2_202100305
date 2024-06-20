@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import recursos.Constantes;
 
 public class Main {
@@ -29,7 +28,7 @@ public class Main {
     // VAriables
     public static Escena scene;
     public static boolean jeu = true;
-        public static Clip clip; // Variable para el clip de música
+    public static Clip clip; // Variable para el clip de música
     
 
 
@@ -37,15 +36,12 @@ public class Main {
     // metodos
    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            
             // Creación de la ventana de la aplicación
             JFrame fenetre = new JFrame("Space Invaders");
             fenetre.setSize(1000, 600);
             fenetre.setResizable(false);
             fenetre.setLocationRelativeTo(null);
             fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            
-            
             try {
                 File audioFile = new File("src/sons/Intro.wav");
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -55,7 +51,6 @@ public class Main {
             } catch (Exception ex) {
                 System.out.println("Error al cargar el archivo de audio: " + ex.getMessage());
             }
-
             // Crear una etiqueta para la imagen de fondo
             JLabel background = new JLabel();
             background.setLayout(new BorderLayout());
@@ -69,15 +64,11 @@ public class Main {
             JPanel buttonPanel = new JPanel(new GridBagLayout());
             buttonPanel.setOpaque(false); // Hacer el panel transparente
             buttonPanel.setSize(100,100);
-            
-
             // Estilo de fuente para los botones
             Font buttonFont = new Font("Futura", Font.BOLD, 22);
-
             // Cargar la imagen del JLabel
             ImageIcon labelImage = new ImageIcon("src/images/Icono.png"); // Cambia la ruta por la de tu imagen
             JLabel imageLabel = new JLabel(labelImage);
-
             JButton startButton = new JButton("Nuevo Juego");
             startButton.setFont(buttonFont);
             startButton.setFocusPainted(false); // Quita el efecto de resaltado al obtener el foco
@@ -97,10 +88,6 @@ public class Main {
 
     }
 });
-            
-            
-            
-
             // Botón "Cargar Juego"
             JButton cargarButton = new JButton("Cargar Juego");
             cargarButton.setFont(buttonFont);
@@ -172,7 +159,6 @@ public class Main {
 
     public static void demarrerJeu() throws IOException {
         // ventana del juegos
-        
         try {
                 File audioFile = new File("src/sons/Intro.wav");
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -182,25 +168,16 @@ public class Main {
             } catch (Exception ex) {
                 System.out.println("Error al cargar el archivo de audio: " + ex.getMessage());
             }
-
         JFrame jeuFrame = new JFrame("Space Invaders");
         jeuFrame.setSize(Constantes.LARGO_VENTANA, Constantes.ALTURA_VENTANA);
         jeuFrame.setResizable(false);
         jeuFrame.setLocationRelativeTo(null);
         jeuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jeuFrame.setAlwaysOnTop(true);
-
         scene = new Escena();
         Main.jeu=true;
-
         jeuFrame.setContentPane(scene);
-
         jeuFrame.setVisible(true);
-        
-        
-        
-        
-        
         
     }
      
