@@ -12,29 +12,29 @@ public class GrupoAliens {
     // Variables
     // tabla que contiene a los aliens
     private Alien tabAlien[][] = new Alien[8][5];
-    private boolean vaEnBas, pos1; // numeros 
-    private int vitesse;
+    private boolean vaAbajo, pos1; // numeros 
+    private int velocidad;
 
-    private int[] tabAlienMort = {-1,-1}; // alien muerto
+    private int[] tabAlienMuerto = {-1,-1}; // alien muerto
 
-    Random hasard = new Random();
+    Random azar = new Random();
 
     private int nombreAliens = Constantes.NUMERO_ALIENS;
 
-    private int compteurSonAlien = 0;
+    private int contadorSonAlien = 0;
 
     // Constructor
 
     public GrupoAliens() {
-        this.initTableauAliens();
-        this.vaEnBas = true;
+        this.iniciaTablaAliens();
+        this.vaAbajo = true;
         this.pos1 = true;
-        this.vitesse = Constantes.VELOCIDAD_ALIEN;
+        this.velocidad = Constantes.VELOCIDAD_ALIEN;
     }
 
     // Metodo
 
-    private void initTableauAliens() {
+    private void iniciaTablaAliens() {
         // desplega la tabla de aliens
         for(int ligne = 0; ligne < 8; ligne++) {
             for(int colonne = 0; colonne < 5; colonne++) {
@@ -64,14 +64,14 @@ public class GrupoAliens {
     }
 
     public void dessinAliens(Graphics g) {
-        if(Tiempo.compteTours % (100 - 10 * this.vitesse) == 0) {
+        if(Tiempo.compteTours % (100 - 10 * this.velocidad) == 0) {
             this.deplacementAliens();
         }
         // Diseño de aliens contenidos en la matriz
         for(int ligne = 0; ligne < 8; ligne++) {
             for(int colonne = 0; colonne < 5; colonne++) {
                 if(this.tabAlien[ligne][colonne] != null) {
-                    this.tabAlien[ligne][colonne].choixImage(pos1);
+                    this.tabAlien[ligne][colonne].EligeImagen(pos1);
                     g.drawImage(this.tabAlien[ligne][colonne].getImg(), this.tabAlien[ligne][colonne].getxPos(), this.tabAlien[ligne][colonne].getyPos(), null);
                 }
             }
@@ -119,9 +119,9 @@ public class GrupoAliens {
                     }
                 }
             }
-            this.vaEnBas = false;
-            if (this.vitesse < 9) {
-                this.vitesse++;
+            this.vaAbajo = false;
+            if (this.velocidad < 9) {
+                this.velocidad++;
             }
         } else {
             if (this.toucheHaut()) {
@@ -133,20 +133,20 @@ public class GrupoAliens {
                         }
                     }
                 }
-                this.vaEnBas = true;
-                if (this.vitesse < 9) {
-                    this.vitesse++;
+                this.vaAbajo = true;
+                if (this.velocidad < 9) {
+                    this.velocidad++;
                 }
             }
         }
     }
 
     public void deplacementAliens() {
-        if (this.tabAlienMort[0] != -1) {
-            elimineAlienMort(tabAlienMort);
-            tabAlienMort[0] = -1;
+        if (this.tabAlienMuerto[0] != -1) {
+            elimineAlienMort(tabAlienMuerto);
+            tabAlienMuerto[0] = -1;
         }
-        if (this.vaEnBas) {
+        if (this.vaAbajo) {
             // Si va hacia abajo, mueve hacia la izquierda
             for (int ligne = 0; ligne < 8; ligne++) {
                 for (int colonne = 0; colonne < 5; colonne++) {
@@ -166,7 +166,7 @@ public class GrupoAliens {
             }
         }
         this.joueSonAlien();
-        this.compteurSonAlien++;
+        this.contadorSonAlien++;
         if (this.pos1) {
             this.pos1 = false;
         } else {
@@ -182,8 +182,8 @@ public class GrupoAliens {
                 if(tirVaisseau.tueAlien(this.tabAlien[ligne][colonne]) == true) {
                     this.tabAlien[ligne][colonne].vivo = false; // On tue l'alien
                     tirVaisseau.yPos = -1; // On tue le tir
-                    this.tabAlienMort[0] = ligne;
-                    this.tabAlienMort[1] = colonne; 
+                    this.tabAlienMuerto[0] = ligne;
+                    this.tabAlienMuerto[1] = colonne; 
                     
                     // Determinar el valor según la columna
                     if(colonne == 0 ) {
@@ -209,10 +209,8 @@ public class GrupoAliens {
         int positionAlien[] = {-1,-1};
         if(this.nombreAliens != 0) {
             do {
-                int ligne = hasard.nextInt(7); // Tiro al azar de los aliens
-                // tableau des aliens        
+                int ligne = azar.nextInt(7); // Tiro al azar de los aliens
                 for(int colonne = 4; colonne >= 0; colonne--) { 
-                // en partant du bas
                     if(tabAlien[ligne][colonne] != null) {
                         positionAlien[0] = this.tabAlien[ligne][colonne].getxPos();
                         positionAlien[1] = this.tabAlien[ligne][colonne].getyPos();
@@ -225,7 +223,7 @@ public class GrupoAliens {
     }
 
     private void joueSonAlien() {
-        int compteur = this.compteurSonAlien % 4;
+        int compteur = this.contadorSonAlien % 4;
         if(compteur == 0) {
             Audio.playSound("/sons/sonAlien1.wav");
         } else if(compteur == 1) {
@@ -244,7 +242,7 @@ public class GrupoAliens {
    public int positionAlienLePlusGauche() {
     int posHaut = Constantes.ALTURA_VENTANA; // Inicializar posición más arriba
 
-    // Iterar sobre los aliens para encontrar la posición más a la izquierda horizontalmente
+    // Iterar sobre los aliens para encontrar la posición más a la izquierda verticalmente
     for (int colonne = 0; colonne < 5; colonne++) {
         for (int ligne = 0; ligne < 8; ligne++) {
             if (this.tabAlien[ligne][colonne] != null) {

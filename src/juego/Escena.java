@@ -27,6 +27,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import static juego.Main.clip;
@@ -57,6 +58,8 @@ public class Escena extends JPanel {
 	public int score = 0;
             public Timer timer;
     private int tiempoRestante = 90; // Tiempo en segundos
+        private boolean gameOverDisplayed = false; // Nueva variable para controlar la visualización de Game Over
+
 
         
 
@@ -121,11 +124,20 @@ public class Escena extends JPanel {
         
 // Método para guardar el puntaje en un archivo
     private void guardarPuntaje(String nombre, int puntaje) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Puntajes/puntajes.txt", true))) {
-            writer.write(nombre + ": " + puntaje);
-            writer.newLine();
+        File puntajeArchivo = new File("src/Puntajes/puntajes.txt");
+        try {
+            if (!puntajeArchivo.exists()) {
+                puntajeArchivo.getParentFile().mkdirs(); // Crear directorio si no existe
+                puntajeArchivo.createNewFile(); // Crear archivo si no existe
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(puntajeArchivo, true))) {
+                writer.write(nombre + ": " + puntaje);
+                writer.newLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error guardando el puntaje: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 		
@@ -177,13 +189,27 @@ public class Escena extends JPanel {
 		    g.drawString("LET´S GO!!!", 200, 300);
 		}
 		
-		// Affichage de la fin du jeu
-		if(this.vaisseau.isVivo() == false|| tiempoRestante<=0) {
-			g.setFont(afficheTexte);
-                        g.setColor(Color.YELLOW);
-			g.drawString("GAME OVER", 200, 300);
-                        Main.jeu=false;
-		}
+		 if (!this.vaisseau.isVivo() || tiempoRestante <= 0) {
+            g.setFont(afficheTexte);
+            g.setColor(Color.YELLOW);
+            g.drawString("GAME OVER", 200, 300);
+
+            // Mostrar diálogo solo una vez
+            if (!gameOverDisplayed) {
+                gameOverDisplayed = true;
+                String nombre = JOptionPane.showInputDialog(this, "Ingrese su nombre:", "Game Over", JOptionPane.PLAIN_MESSAGE);
+                if (nombre != null && !nombre.trim().isEmpty()) {
+                    guardarPuntaje(nombre.trim(), score);
+                }
+            }
+                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(Escena.this);
+                        frame.dispose();
+                         clip.stop();
+                         Main.jeu = true;
+                         Main.main(new String[]{});
+                     
+            
+        }
 		
 		
 		// diseño prooyectil aliens

@@ -12,20 +12,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 
 import recursos.Constantes;
 
@@ -123,14 +118,13 @@ public class Main {
             puntuacionButton.setSize(40,20);
             
             puntuacionButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                                        mostrarPuntuaciones();
-
-                }
-
-                private void mostrarPuntuaciones() {
-                }
-            });
+    public void actionPerformed(ActionEvent e) {
+        // Crear y mostrar el frame de puntuaciones
+        JFrame puntuacionesFrame = new PuntuacionesFrame();
+        puntuacionesFrame.setVisible(true);
+     
+    }
+});
         
             // Establecer el borde
 

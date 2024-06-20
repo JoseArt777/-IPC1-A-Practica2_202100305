@@ -43,9 +43,8 @@ public class Item1 extends Entidad {
     
     private int getRandomYPosition() {
         Random rand = new Random();
-        // Define the range for the y position
-        int minY = 50; // Minimum y position
-        int maxY = (Constantes.ALTURA_VENTANA-Constantes.MARGEN) - Constantes.Y_POS_INI_TIEMPO; // Maximum y position
+        int minY = 50;
+        int maxY = (Constantes.ALTURA_VENTANA-Constantes.MARGEN) - Constantes.Y_POS_INI_TIEMPO; 
         return rand.nextInt(maxY - minY + 1) + minY;
     }
 

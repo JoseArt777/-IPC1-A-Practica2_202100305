@@ -69,7 +69,7 @@ public class Nave extends Entidad {
 	}
 	
 	public void destructionVaisseau() {
-		if(compteur < 900) {
+		if(compteur <= 900) {
 			if(Tiempo.compteTours % 2 == 0)
                         {
                             super.ico = new ImageIcon(getClass().getResource(super.strImg2));

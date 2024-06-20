@@ -47,9 +47,8 @@ public class Item3 extends Entidad {
     
     private int getRandomYPosition2() {
         Random rand2 = new Random();
-        // Define the range for the y position
-        int minY = 0; // Minimum y position
-        int maxY = (Constantes.ALTURA_VENTANA-Constantes.MARGEN) - Constantes.Y_POS_INI_DTIEMPO; // Maximum y position
+        int minY = 50;
+        int maxY = (Constantes.ALTURA_VENTANA-Constantes.MARGEN) - Constantes.Y_POS_INI_DTIEMPO;
         return rand2.nextInt(maxY - minY + 1) + minY;
     }
 
@@ -59,7 +58,7 @@ public class Item3 extends Entidad {
                 this.xPos = this.xPos - this.dx;
             } else {
                 this.xPos = Constantes.X_POS_INI_DTIEMPO;
-                this.yPos = getRandomYPosition2(); //Nueva posición en y
+                this.yPos = getRandomYPosition2(); 
             }    
         }
         return this.xPos;
